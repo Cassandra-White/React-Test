@@ -1,5 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SeasonDisplay from './SeasonDisplay';
+// npm install semantic-ui-css
+
+
 
 class App extends React.Component{
     constructor(props){
@@ -7,9 +11,11 @@ class App extends React.Component{
 
         this.state = {
             latitude: null,
-            errorMessage: null,
+            errorMessage: "",
         }
+    }
 
+    componentDidMount(){
         window.navigator.geolocation.getCurrentPosition(
             (location) => { this.setState({latitude: location.coords.latitude})},
             (error) => { this.setState({errorMessage: error.message});}
@@ -23,13 +29,14 @@ class App extends React.Component{
             <div>
 
                 {
-                    this.state.errorMessage !== null ? `Error : ${this.state.errorMessage}` 
+                    this.state.errorMessage !== "" ? `Error : ${this.state.errorMessage}` 
                     : this.state.latitude !== null   ? `Latitude : ${this.state.latitude}` 
                     : `Latitude : Loading...`
                 }
                
                 <br/>
                 
+                <SeasonDisplay latitude={this.state.latitude}/>
             </div>
         );
     }
