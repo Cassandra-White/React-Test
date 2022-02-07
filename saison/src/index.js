@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import SeasonDisplay from './SeasonDisplay';
-// npm install semantic-ui-css
+import LoadingSpinner from './LoadingSpinner';
 
 
 
@@ -12,6 +12,7 @@ class App extends React.Component{
         this.state = {
             latitude: null,
             errorMessage: "",
+            loadingMessage:'Activez votre localisation afin d\'afficher le contenu',
         }
     }
 
@@ -21,23 +22,20 @@ class App extends React.Component{
             (error) => { this.setState({errorMessage: error.message});}
         );
     }
+
+    renderContent = () => {
+        return (
+            this.state.errorMessage !== "" ? `Error : ${this.state.errorMessage}` 
+            : this.state.latitude !== null   ? <SeasonDisplay latitude={this.state.latitude}/>
+            : <LoadingSpinner loadingMessage={this.state.loadingMessage}/>
+        )
+    }
     
     render(){
         
 
         return(
-            <div>
-
-                {
-                    this.state.errorMessage !== "" ? `Error : ${this.state.errorMessage}` 
-                    : this.state.latitude !== null   ? `Latitude : ${this.state.latitude}` 
-                    : `Latitude : Loading...`
-                }
-               
-                <br/>
-                
-                <SeasonDisplay latitude={this.state.latitude}/>
-            </div>
+            <div>{this.renderContent()}</div>
         );
     }
 }
