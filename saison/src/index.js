@@ -6,14 +6,10 @@ import LoadingSpinner from './LoadingSpinner';
 
 
 class App extends React.Component{
-    constructor(props){
-        super(props);
-
-        this.state = {
-            latitude: null,
-            errorMessage: "",
-            loadingMessage:'Activez votre localisation afin d\'afficher le contenu',
-        }
+    state = {
+        latitude: null,
+        errorMessage: "",
+        loadingMessage:'Activez votre localisation afin d\'afficher le contenu'
     }
 
     componentDidMount(){
